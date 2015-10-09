@@ -1,0 +1,23 @@
+{
+    "name": "fastnorth/validator",
+    "description": "FastNorth Validator",
+    "require": {
+        "symfony/property-access": "~2.7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "FastNorth\\Validator\\": "src/FastNorth/Validator/"
+        }
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "naneau",
+            "email": "git@naneau.net"
+        }
+    ],
+    "minimum-stability": "stable"
+}
