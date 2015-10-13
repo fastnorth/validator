@@ -19,7 +19,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $definition = new Definition;
 
         $definition
-            ->field('foo')
+            ->field('[foo]')
             ->should(new Constraint\StringLength(
                 ['max' => 5],
                 [Constraint\StringLength::TOO_LONG => 'TOO LONG']
@@ -38,7 +38,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $definition = new Definition;
 
         $definition
-            ->field('foo')
+            ->field('[foo]')
             ->should(new Constraint\StringLength(
                 ['max' => 5],
                 [Constraint\StringLength::TOO_LONG => 'TOO LONG']
@@ -52,9 +52,9 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
 
         // Assert structure of error messages
         $this->assertCount(1, $validation->getMessages());
-        $this->assertArrayHasKey('foo',$validation->getMessages());
-        $this->assertArrayHasKey(Constraint\StringLength::TOO_LONG, $validation->getMessages()['foo']);
-        $this->assertEquals('TOO LONG', $validation->getMessages()['foo'][Constraint\StringLength::TOO_LONG]);
+        $this->assertArrayHasKey('[foo]', $validation->getMessages());
+        $this->assertArrayHasKey(Constraint\StringLength::TOO_LONG, $validation->getMessages()['[foo]']);
+        $this->assertEquals('TOO LONG', $validation->getMessages()['[foo]'][Constraint\StringLength::TOO_LONG]);
     }
 
     /** @test */
@@ -63,7 +63,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $definition = new Definition;
 
         $definition
-            ->field('foo', self::alwaysFalse())
+            ->field('[foo]', self::alwaysFalse())
             ->should(
                 new Constraint\StringLength(
                     ['max' => 5],
@@ -84,7 +84,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $definition = new Definition;
 
         $definition
-            ->field('foo', self::alwaysTrue())
+            ->field('[foo]', self::alwaysTrue())
             ->should(
                 new Constraint\StringLength(
                     ['max' => 5],
@@ -105,7 +105,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $definition = new Definition;
 
         $definition
-            ->field('foo')
+            ->field('[foo]')
             ->should(
                 new Constraint\StringLength(
                     ['max' => 5],
@@ -127,7 +127,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $definition = new Definition;
 
         $definition
-            ->field('foo')
+            ->field('[foo]')
             ->should(
                 new Constraint\StringLength(
                     ['max' => 5],
@@ -144,9 +144,9 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
 
         // Assert structure of error messages
         $this->assertCount(1, $validation->getMessages());
-        $this->assertArrayHasKey('foo',$validation->getMessages());
-        $this->assertArrayHasKey(Constraint\StringLength::TOO_LONG, $validation->getMessages()['foo']);
-        $this->assertEquals('TOO LONG', $validation->getMessages()['foo'][Constraint\StringLength::TOO_LONG]);
+        $this->assertArrayHasKey('[foo]',$validation->getMessages());
+        $this->assertArrayHasKey(Constraint\StringLength::TOO_LONG, $validation->getMessages()['[foo]']);
+        $this->assertEquals('TOO LONG', $validation->getMessages()['[foo]'][Constraint\StringLength::TOO_LONG]);
     }
 
     /** @test */
@@ -155,7 +155,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $definition = new Definition;
 
         $definition
-            ->field('foo')
+            ->field('[foo]')
             ->required(true, 'foorequired');
 
         $validator = new Validator($definition);
@@ -171,18 +171,14 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $definition = new Definition;
 
         $definition
-            ->field('foo')
-            ->required(false);
-
-        $definition
-            ->field('foo', self::alwaysFalse(false))
+            ->field('[foo]', self::alwaysFalse(false))
             ->required(true);
 
         $validator = new Validator($definition);
 
         $validation = $validator->validate(array('bar' => 'bar'));
 
-        $this->assertFalse($validation->passes());
+        $this->assertTrue($validation->passes());
     }
 
     private static function alwaysTrue($checkValue = true)
