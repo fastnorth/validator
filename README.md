@@ -1,5 +1,7 @@
 # FastNorth Validator
 
+[![Build Status](https://travis-ci.org/fastnorth/validator.svg)](https://travis-ci.org/fastnorth/validator)
+
 This is a simple data validation library that deals with validating a variety of data structures. It was born out of dissatisfaction with existing libraries that were either very complex and hard to implement, or seemed to have design flaws.
 
 ## Installation
