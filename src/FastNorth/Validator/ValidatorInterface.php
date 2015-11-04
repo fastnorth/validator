@@ -35,7 +35,7 @@ interface ValidatorInterface
      *
      * Can only be called *after* validate()
      *
-     * @param mixed $what
+     * @param mixed $field
      *
      * @return mixed
      */

@@ -3,7 +3,6 @@
 namespace FastNorth\Validator;
 
 use FastNorth\Validator\Validation\Compound as CompoundValidation;
-use FastNorth\Validator\DefinitionInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
 
