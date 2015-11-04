@@ -16,7 +16,10 @@ class Callback extends AbstractConstraint
      */
     public function validate($value, $context = null)
     {
-        if (!$this->getOption('callback')($value, $context)) {
+
+        /** @var Callable $callback */
+        $callback = $this->getOption('callback');
+        if (! $callback($value, $context)) {
             return $this->fail(self::INVALID);
         }
 
