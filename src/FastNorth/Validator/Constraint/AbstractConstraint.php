@@ -79,11 +79,15 @@ abstract class AbstractConstraint implements ConstraintInterface
      * Get an option by key
      *
      * @param string $key
+     * @param mixed  $default
      * @return mixed
      */
-    protected function getOption($key)
+    protected function getOption($key, $default = null)
     {
-        return $this->options[$key];
+        if (isset($this->options[$key])) {
+            return $this->options[$key];
+        }
+        return is_callable($default) ? $default($key) : $default;
     }
 
     /**
