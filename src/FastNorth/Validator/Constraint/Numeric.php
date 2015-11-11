@@ -7,7 +7,7 @@ namespace FastNorth\Validator\Constraint;
  *
  * Checks if value is numeric
  */
-class Numeric
+class Numeric extends AbstractConstraint
 {
     const NOT_NUMERIC = 'not_numeric';
 
