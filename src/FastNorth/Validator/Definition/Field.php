@@ -55,6 +55,8 @@ class Field implements FieldInterface
             'validator' => $constraint,
             'when'      => $when
         ];
+
+        return $this;
     }
 
     /**
