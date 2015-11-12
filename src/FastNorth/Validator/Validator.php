@@ -87,6 +87,10 @@ class Validator implements ValidatorInterface
             throw new \RuntimeException('There is no field data to access, call validate() first');
         }
 
+        if (is_array($this->data)) {
+            $field = "[$field]";
+        }
+
         return $this->getPropertyAccessor()->getValue($this->data, $field);
     }
 
