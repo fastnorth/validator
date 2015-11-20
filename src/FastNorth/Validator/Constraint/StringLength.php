@@ -37,7 +37,7 @@ class StringLength extends AbstractConstraint
     {
         return [
             self::TOO_SHORT => 'The value you have provided is shorter than the required {{ min }} characters',
-            self::TOO_LONG  => 'The value you have provided is longer than the maximum {{ min }} characters'
+            self::TOO_LONG  => 'The value you have provided is longer than the maximum {{ max }} characters'
         ];
     }
 
