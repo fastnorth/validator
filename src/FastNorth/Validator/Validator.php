@@ -88,7 +88,9 @@ class Validator implements ValidatorInterface
         }
 
         if (is_array($this->data)) {
-            $field = "[$field]";
+            if ($field[0] !== '[') {
+                $field = "[$field]";
+            }
         }
 
         return $this->getPropertyAccessor()->getValue($this->data, $field);
