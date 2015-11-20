@@ -91,18 +91,28 @@ abstract class AbstractConstraint implements ConstraintInterface
     }
 
     /**
+     * Get all options
+     *
+     * @return array
+     */
+    protected function getOptions()
+    {
+        return $this->options;
+    }
+
+    /**
      * Fail validation.
      *
      * @param string|string[] $messages identifiers of the messages (keys)
      *
      * @return Validation
      */
-    protected function fail($messages)
+    protected function fail($messages, array $interpolate = [])
     {
         $fullMessages = [];
 
         foreach ((array) $messages as $key) {
-            $fullMessages[$key] = $this->getMessage($key);
+            $fullMessages[$key] = self::interpolate($this->getMessage($key), $interpolate);
         }
 
         return new Validation(false, $fullMessages);
@@ -117,4 +127,24 @@ abstract class AbstractConstraint implements ConstraintInterface
     {
         return new Validation(true);
     }
+
+    /**
+     * Interpolate a string using `{{ foo }}` placeholders
+     *
+     * @param string $string
+     * @param array $variables
+     */
+    protected static function interpolate($string, array $variables = [])
+    {
+        foreach($variables as $key => $value) {
+            $string = preg_replace(
+                sprintf('/\{\{\s*%s\s*\}\}/', $key),
+                $value,
+                $string
+            );
+        }
+
+        return $string;
+    }
 }
+

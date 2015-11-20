@@ -19,12 +19,12 @@ class StringLength extends AbstractConstraint
     {
         $min = $this->getOption('min');
         if ($min >= 0 && strlen($value) < $min) {
-            return $this->fail(self::TOO_SHORT);
+            return $this->fail(self::TOO_SHORT, $this->getOptions());
         }
 
         $max = $this->getOption('max');
         if ($max >= 0 && strlen($value) > $max) {
-            return $this->fail(self::TOO_LONG);
+            return $this->fail(self::TOO_LONG, $this->getOptions());
         }
 
         return $this->pass();
@@ -37,7 +37,7 @@ class StringLength extends AbstractConstraint
     {
         return [
             self::TOO_SHORT => 'The value you have provided is shorter than the required {{ min }} characters',
-            self::TOO_LONG  => 'The value you have provided is longer than the maximum {{ min }} characters'
+            self::TOO_LONG  => 'The value you have provided is longer than the maximum {{ max }} characters'
         ];
     }
 

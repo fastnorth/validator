@@ -1,6 +1,6 @@
 <?php
 
-namespace Unit\Validator;
+namespace Tests\Unit\Validator;
 
 use FastNorth\Validator\Validator;
 use FastNorth\Validator\Definition;
