@@ -21,14 +21,7 @@ class Validator implements ValidatorInterface
     private $definition;
 
     /**
-     * Data to validate.
-     *
-     * @param mixed
-     */
-    private $data;
-
-    /**
-     * the property accesor.
+     * the property accessor.
      *
      * @var PropertyAccessor
      */
@@ -51,49 +44,57 @@ class Validator implements ValidatorInterface
      */
     public function validate($data)
     {
-        $this->data = $data;
-
         $fullValidation = new CompoundValidation;
 
         foreach ($this->getDefinition()->getFields() as $field) {
-            // Retrieve field's value
-            $value = $this->getFieldValue($field);
-
-            // Constraints
-            $constraints = $this->getDefinition()->getConstraints($field, $value, $data);
-
-            // Combine field validations
-            $combinedFieldValidation = new CompoundValidation($field);
-            foreach ($constraints as $key => $validator) {
-                $combinedFieldValidation->add(
-                    $field . '-' . $key,
-                    $validator->validate($value, $data)
-                );
-            }
-
-            // Add to full validation
-            $fullValidation->add($field, $combinedFieldValidation);
+            // Validate the field and add to full validation
+            $fullValidation->add($field, $this->validateField($field, $data));
         }
 
         return $fullValidation;
     }
 
     /**
+     * @inheritdoc
+     */
+    public function validateField($field, $data)
+    {
+        // Retrieve field's value
+        $value = $this->getFieldValue($field, $data);
+
+        // Constraints
+        $constraints = $this->getDefinition()->getConstraints($field, $value, $data);
+
+        // Combine field validations
+        $combinedFieldValidation = new CompoundValidation($field);
+        foreach ($constraints as $key => $validator) {
+            /** @var ValidatorInterface $validator */
+
+            $combinedFieldValidation->add(
+                $field . '-' . $key,
+                $validator->validate($value)
+            );
+        }
+
+        return $combinedFieldValidation;
+    }
+
+    /**
      * {@inheritdoc}
      */
-    public function getFieldValue($field)
+    public function getFieldValue($field, $data)
     {
-        if ($this->data === null) {
+        if ($data === null) {
             throw new \RuntimeException('There is no field data to access, call validate() first');
         }
 
-        if (is_array($this->data)) {
+        if (is_array($data)) {
             if ($field[0] !== '[') {
                 $field = "[$field]";
             }
         }
 
-        return $this->getPropertyAccessor()->getValue($this->data, $field);
+        return $this->getPropertyAccessor()->getValue($data, $field);
     }
 
     /**
@@ -121,7 +122,7 @@ class Validator implements ValidatorInterface
     }
 
     /**
-     * Get the property accesor.
+     * Get the property accessor.
      *
      * @return PropertyAccessor
      */
@@ -131,7 +132,7 @@ class Validator implements ValidatorInterface
     }
 
     /**
-     * Set the property accesor.
+     * Set the property accessor.
      *
      * @param PropertyAccessor $propertyAccessor
      *

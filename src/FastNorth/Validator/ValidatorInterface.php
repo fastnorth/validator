@@ -21,9 +21,6 @@ interface ValidatorInterface
     /**
      * Validate some data.
      *
-     * Sets the internal data for the validator and returns the validation
-     * status
-     *
      * @param mixed $what
      *
      * @return ValidationInterface
@@ -31,13 +28,23 @@ interface ValidatorInterface
     public function validate($what);
 
     /**
-     * Get the value contained in a field, which is to be validated
+     * Validate only one field of the definition given some data
      *
-     * Can only be called *after* validate()
+     * This can be useful when you don't have a full data set
+     *
+     * @param string $field
+     * @param mixed  $what
+     *
+     * @return ValidationInterface
+     */
+    public function validateField($field, $what);
+
+    /**
+     * Get the value contained in a field, which is to be validated
      *
      * @param mixed $field
      *
      * @return mixed
      */
-    public function getFieldValue($field);
+    public function getFieldValue($field, $data);
 }
