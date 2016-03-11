@@ -181,6 +181,51 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($validation->passes());
     }
 
+    /** @test */
+    public function itValidatesSingleFieldByItself()
+    {
+        $definition = new Definition;
+
+        $definition
+            ->field('[foo]')
+            ->should(new Constraint\StringLength(
+                ['max' => 5],
+                [Constraint\StringLength::TOO_LONG => 'TOO LONG']
+            ));
+
+        $validator = new Validator($definition);
+
+        $validation = $validator->validateField('[foo]', array('foo' => 'foo'));
+
+        $this->assertTrue($validation->passes());
+    }
+
+    /** @test */
+    public function itDoesNotComplainAboutMissingContextWhenSingleFieldIsValidated()
+    {
+        $definition = new Definition;
+
+        $definition
+            ->field('[foo]')
+            ->should(new Constraint\StringLength(
+                ['max' => 5],
+                [Constraint\StringLength::TOO_LONG => 'TOO LONG']
+            ));
+
+        $definition
+            ->field('[bar]')
+            ->should(new Constraint\StringLength(
+                ['max' => 5],
+                [Constraint\StringLength::TOO_LONG => 'TOO LONG']
+            ));
+
+        $validator = new Validator($definition);
+
+        $validation = $validator->validateField('[foo]', array('foo' => 'foo'));
+
+        $this->assertTrue($validation->passes());
+    }
+
     private static function alwaysTrue($checkValue = true)
     {
         return self::makeClosure(true, $checkValue);
