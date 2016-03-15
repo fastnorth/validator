@@ -72,7 +72,7 @@ class Validator implements ValidatorInterface
 
             $combinedFieldValidation->add(
                 $field . '-' . $key,
-                $validator->validate($value)
+                $validator->validate($value, $data)
             );
         }
 
