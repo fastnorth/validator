@@ -21,7 +21,7 @@ class DateTimeString extends AbstractConstraint
             return $this->fail(self::EMPTY_VALUE);
         }
 
-        if (!is_date($value)) {
+        if (!strtotime($value)) {
             // is this string valid?
             return $this->fail(self::INCORRECT_VALUE);
         }
