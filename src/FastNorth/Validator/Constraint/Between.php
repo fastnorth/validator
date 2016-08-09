@@ -17,7 +17,7 @@ class Between extends AbstractConstraint
      */
     public function validate($value, $context = null)
     {
-        if (empty($value)) {
+        if (is_null($value)) {
             return $this->fail(self::EMPTY_VALUE);
         }
 
